@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, Transition, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 
 const PATH =
@@ -9,7 +9,7 @@ const PATH =
 
 interface PathAnimationFramerProps {
   height?: string;
-  doorLeft?: string;
+  doorRight?: string;
   doorTop?: string;
   doorWidth?: number;
   doorZIndex?: number;
@@ -17,9 +17,9 @@ interface PathAnimationFramerProps {
 
 export default function PathAnimationFramer({
   height = "400vh",
-  doorLeft = "2%",
-  doorTop = "-8%",
-  doorWidth = 1000,
+  doorRight = "7%",
+  doorTop = "-5%",
+  doorWidth = 800,
   doorZIndex = -5,
 }: PathAnimationFramerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -30,38 +30,50 @@ export default function PathAnimationFramer({
   });
 
   const pathLength = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const pathOpacity = useTransform(scrollYProgress, [0, 1], [0.2, 1]);
+
+  // Text box fades in near the end of the scroll
+  const textBoxOpacity = useTransform(scrollYProgress, [0.8, 1], [0, 1]);
+  const textBoxY = useTransform(scrollYProgress, [0.8, 1], [30, 0]);
+
+  const BOAT_ANIMATE = { y: [0, -14, 0], rotate: [-1.5, 1.5, -1.5] };
+  const BOAT_TRANSITION: Transition = {
+    duration: 3.5,
+    repeat: Infinity,
+    ease: "easeInOut",
+  };
 
   return (
-    <div ref={containerRef} className="relative" style={{ height: height, paddingBottom: "100px" }}>
-      {/* Text above the path */}
-      {/* <motion.div
-        className="absolute top-[5%] left-0 right-0 flex flex-col items-center pointer-events-none select-none"
-        style={{ opacity: textOpacity, y: textY, zIndex: 10 }}
-      >
-        <h2
-          className="text-5xl font-bold tracking-tight text-center"
-          style={{
-            color: "rgba(255,255,255,0.88)",
-            textShadow: "0 0 40px rgba(255,220,100,0.25), 0 2px 16px rgba(0,0,0,0.9)",
-          }}
-        >
-          The Journey
-        </h2>
-        <p
-          className="mt-3 text-sm tracking-[0.28em] uppercase"
-          style={{ color: "rgba(255,255,255,0.3)" }}
-        >
-          follow the path
-        </p>
-      </motion.div> */}
-
+    <div
+      ref={containerRef}
+      className="relative"
+      style={{ height: height, paddingTop: "100px", paddingBottom: "100px" }}
+    >
       {/* Path animation */}
-      <div className="sticky top-0 flex items-center justify-center overflow-visible" style={{ zIndex: 5 }}>
+      <div
+        className="sticky top-0 flex items-center justify-center overflow-visible"
+        style={{ zIndex: 5 }}
+      >
+        <motion.div
+          className="absolute"
+          style={{ top: "12%", left: "12%", width: 400 }}
+          animate={BOAT_ANIMATE}
+          transition={BOAT_TRANSITION}
+        >
+          <Image
+            src="/images/messy.png"
+            alt="messy"
+            width={700}
+            height={259}
+            style={{ objectFit: "contain", position: "relative" }}
+          />
+        </motion.div>
+
         {/* Door image — behind SVG path */}
         <div
           style={{
             position: "absolute",
-            left: doorLeft,
+            right: doorRight,
             top: doorTop,
             width: doorWidth,
             aspectRatio: "auto",
@@ -78,6 +90,22 @@ export default function PathAnimationFramer({
           />
         </div>
 
+        {/* Boat image — between layer 1 and front layer 2, hull gets overlapped */}
+        <motion.div
+          className="absolute"
+          style={{ bottom: "33%", left: "48%", width: 500 }}
+          animate={BOAT_ANIMATE}
+          transition={BOAT_TRANSITION}
+        >
+          <Image
+            src="/images/Whimsical boat with glowing lantern.png"
+            alt="boat"
+            width={700}
+            height={259}
+            style={{ objectFit: "contain", position: "relative" }}
+          />
+        </motion.div>
+
         <svg
           width="947"
           height="1977"
@@ -88,7 +116,13 @@ export default function PathAnimationFramer({
           style={{ overflow: "visible" }}
         >
           <defs>
-            <filter id="framer-depth-shadow" x="-20%" y="-20%" width="140%" height="140%">
+            <filter
+              id="framer-depth-shadow"
+              x="-20%"
+              y="-20%"
+              width="140%"
+              height="140%"
+            >
               <feDropShadow
                 dx="0"
                 dy="40"
@@ -100,15 +134,48 @@ export default function PathAnimationFramer({
 
           <motion.path
             d={PATH}
-            stroke="#c4c4c4"
+            stroke="#eee2bfff"
             strokeWidth="100"
             strokeLinecap="round"
             fill="none"
             pathLength={pathLength}
+            style={{ opacity: pathOpacity }}
             filter="url(#framer-depth-shadow)"
           />
         </svg>
       </div>
+
+      {/* Text box — fades in at bottom of section */}
+      <motion.div
+        style={{
+          opacity: textBoxOpacity,
+          y: textBoxY,
+          position: "absolute",
+          bottom: "6%",
+          left: "50%",
+          x: "-50%",
+          zIndex: 10,
+          pointerEvents: "none",
+          textAlign: "center",
+          width: "100%",
+          maxWidth: 480,
+        }}
+      >
+        <div
+          style={{
+            background: "rgba(255,255,255,0.06)",
+            padding: "48px",
+            backdropFilter: "blur(12px)",
+          }}
+        >
+          <h2
+            className="text-3xl font-bold tracking-tight"
+            style={{ color: "rgba(255,255,255,0.9)" }}
+          >
+            END
+          </h2>
+        </div>
+      </motion.div>
     </div>
   );
 }
