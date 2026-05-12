@@ -44,7 +44,7 @@ export default function DoorZoomSection() {
           y,
           position: "absolute",
           inset: 0,
-          background: "black",
+          background: "background",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",

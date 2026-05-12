@@ -8,19 +8,19 @@ import { motion, useScroll, useTransform, type Transition } from "framer-motion"
 // Animated x: 0% → -50% = one cycle, then loops
 const LAYERS = [
   {
-    color: "#323232",
+    color: "#302135ff",
     path: "M0,120 C360,80 360,80 720,120 C1080,160 1080,160 1440,120 C1800,80 1800,80 2160,120 C2520,160 2520,160 2880,120 L2880,500 L0,500 Z",
     duration: 12,
     yRange: [0, -20] as [number, number],
   },
   {
-    color: "#505050",
+    color: "#472e52ff",
     path: "M0,240 C360,210 360,210 720,240 C1080,270 1080,270 1440,240 C1800,210 1800,210 2160,240 C2520,270 2520,270 2880,240 L2880,500 L0,500 Z",
     duration: 8,
     yRange: [0, -50] as [number, number],
   },
   {
-    color: "#8e8e8e",
+    color: "#8e5da2ff",
     path: "M0,340 C360,322 360,322 720,340 C1080,358 1080,358 1440,340 C1800,322 1800,322 2160,340 C2520,358 2520,358 2880,340 L2880,500 L0,500 Z",
     duration: 5,
     yRange: [0, -80] as [number, number],
@@ -76,15 +76,15 @@ export default function WaveParallaxFramer({ height = "h-[calc(100vh+160px)]" }:
       {/* Boat image — between layer 1 and front layer 2, hull gets overlapped */}
       <motion.div
         className="absolute"
-        style={{ bottom: "33%", left: "48%", width: 800 }}
+        style={{ bottom: "35%", left: "50%", width: 700 }}
         animate={BOAT_ANIMATE}
         transition={BOAT_TRANSITION}
       >
         <Image
           src="/images/Whimsical boat with glowing lantern.png"
           alt="boat"
-          width={700}
-          height={259}
+          width={600}
+          height={250}
           style={{ objectFit: "contain", position: "relative" }}
         />
       </motion.div>
@@ -130,7 +130,6 @@ export default function WaveParallaxFramer({ height = "h-[calc(100vh+160px)]" }:
           <div
             className="absolute inset-0"
             style={{
-              background: "linear-gradient(to bottom, #1b1b1b 0%, transparent 35%)",
               mixBlendMode: "normal",
             }}
           />
@@ -150,14 +149,6 @@ export default function WaveParallaxFramer({ height = "h-[calc(100vh+160px)]" }:
             className="object-cover"
             style={{ opacity: 0.12, mixBlendMode: "screen" }}
           />
-          {/* Top-to-transparent gradient mask */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background: "linear-gradient(to bottom, #1b1b1b 0%, transparent 35%)",
-              mixBlendMode: "normal",
-            }}
-          />
         </div>
       </motion.div>
 
@@ -167,8 +158,8 @@ export default function WaveParallaxFramer({ height = "h-[calc(100vh+160px)]" }:
         style={{
           bottom: "calc(40%)",
           left: "calc(48%)",
-          width: 420,
-          height: 420,
+          width: 400,
+          height: 400,
           borderRadius: "50%",
           background:
             "radial-gradient(circle, rgba(249, 231, 142, 0.75) 0%, rgba(255,160,30,0.35) 45%, transparent 70%)",

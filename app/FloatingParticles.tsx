@@ -60,7 +60,7 @@ export default function FloatingParticles({ height = "h-screen" }: { height?: st
             top: `${p.y}%`,
             width: p.size * 2,
             height: p.size * 2,
-            background: `radial-gradient(circle, rgba(248, 245, 228, 0.9) 0%, rgba(255, 243, 216, 0.4) 60%, transparent 100%)`,
+            background: `radial-gradient(circle, rgba(247, 241, 206, 0.9) 0%, rgba(238, 209, 141, 0.4) 60%, transparent 100%)`,
             opacity: p.baseOpacity,
           }}
           animate={{
@@ -117,18 +117,6 @@ export default function FloatingParticles({ height = "h-screen" }: { height?: st
         className="absolute inset-0 flex flex-col items-center justify-center z-10 select-none"
         style={{ y: textY }}
       >
-        <motion.h1
-          className="text-7xl font-bold tracking-tight text-center"
-          style={{
-            color: "rgba(255,255,255,0.92)",
-            textShadow: "0 0 60px rgba(255,230,120,0.3), 0 2px 20px rgba(0,0,0,0.8)",
-          }}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.4, ease: "easeOut" }}
-        >
-          Animation
-        </motion.h1>
         <motion.p
           className="mt-5 text-sm tracking-[0.3em] uppercase"
           style={{ color: "rgba(255,255,255,0.35)" }}
@@ -143,7 +131,7 @@ export default function FloatingParticles({ height = "h-screen" }: { height?: st
       {/* Bottom fade */}
       <div
         className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none z-20"
-        style={{ background: "linear-gradient(to bottom, transparent, #1b1b1b)" }}
+        style={{ background: "linear-gradient(to bottom, transparent, transparent)" }}
       />
     </div>
   );

@@ -47,7 +47,7 @@ export default function PathAnimationFramer({
     <div
       ref={containerRef}
       className="relative"
-      style={{ height: height, paddingTop: "100px", paddingBottom: "100px" }}
+      style={{ height: height, paddingTop: "100px", paddingBottom: "100px", background: "linear-gradient(to bottom, #231429ff, #3b3450, #6b5f7a, #c4b8c8)" }}
     >
       {/* Path animation */}
       <div
@@ -134,7 +134,7 @@ export default function PathAnimationFramer({
 
           <motion.path
             d={PATH}
-            stroke="#eee2bfff"
+            stroke="#ffeb84ff"
             strokeWidth="100"
             strokeLinecap="round"
             fill="none"
