@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import PathAnimationFramer from "./PathAnimationFramer";
 import WaveParallaxFramer from "./WaveParallaxFramer";
 import FloatingParticles from "./FloatingParticles";
+// import AnimationCompare from "./AnimationCompare";
 
 function WaveReveal() {
   const ref = useRef<HTMLDivElement>(null);
@@ -47,6 +48,9 @@ export default function Home() {
       <div style={{ paddingTop: "200px" }}>
         <PathAnimationFramer />
       </div>
+
+      {/* ── Animation Comparison Design System ── */}
+      {/* <AnimationCompare /> */}
     </div>
   );
 }
