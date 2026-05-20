@@ -1,68 +1,525 @@
-/* ─── Section 6: Parallax scene ─────────────────────────────────────── */
-.parallaxViewport {
-  position: sticky;
-  top: 0;
-  height: 260px;
-  overflow: hidden;
-  border-radius: 12px;
+/* ─── Design tokens ──────────────────────────────────────────────────── */
+:root {
+  --fm:        #a78bfa;
+  --fm-bg:     rgba(109, 40, 217, 0.15);
+  --fm-bg12:   rgba(109, 40, 217, 0.12);
+  --gsap:      #34d399;
+  --gsap-bg:   rgba(20, 83, 45, 0.2);
+  --gsap-bg12: rgba(20, 83, 45, 0.12);
+  --red:       #f87171;
+  --orange:    #fb923c;
 }
 
-.parallaxLayer {
-  position: absolute;
-  inset: 0;
+/* ─── Page ───────────────────────────────────────────────────────────── */
+.page {
+  background: #070711;
+  color: #fff;
+  min-height: 100vh;
 }
 
-.parallaxLabel {
-  position: absolute;
-  top: 8px;
-  left: 10px;
+/* ─── Header ─────────────────────────────────────────────────────────── */
+.header {
+  text-align: center;
+  padding: 80px 24px 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.headerBadges {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.headerVs {
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 20px;
+}
+
+.h1 {
+  font-family: Inter, sans-serif;
+  font-size: clamp(36px, 6vw, 80px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  background: linear-gradient(135deg, #a78bfa, #fff 50%, #34d399);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0 0 16px;
+}
+
+.headerSub {
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.35);
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* ─── Section ────────────────────────────────────────────────────────── */
+.section {
+  padding: 60px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-family: Inter, sans-serif;
+  font-size: clamp(22px, 3vw, 36px);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+}
+
+.sectionDesc {
+  font-family: Inter, sans-serif;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 32px;
+}
+
+.sectionGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* ─── Demo card ──────────────────────────────────────────────────────── */
+.demoCard {
+  border-radius: 16px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  pointer-events: none;
-  z-index: 20;
+  gap: 16px;
 }
 
-.parallaxLabelRow {
+.demoCardFm {
+  background: var(--fm-bg);
+  border: 1px solid rgba(167, 139, 250, 0.19);
+}
+
+.demoCardGsap {
+  background: var(--gsap-bg);
+  border: 1px solid rgba(52, 211, 153, 0.19);
+}
+
+.demoArea {
+  min-height: 100px;
   display: flex;
   align-items: center;
-  gap: 5px;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 20px;
 }
 
-.parallaxLabelDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.parallaxLabelText {
+/* ─── Badge ──────────────────────────────────────────────────────────── */
+.badge {
+  border-radius: 99px;
+  padding: 3px 12px;
   font-family: monospace;
-  font-size: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
 }
 
-.parallaxNote {
-  position: absolute;
-  bottom: 6px;
-  left: 0;
-  right: 14px;
+.badgeFm {
+  background: rgba(167, 139, 250, 0.13);
+  border: 1px solid rgba(167, 139, 250, 0.33);
+  color: var(--fm);
+}
+
+.badgeGsap {
+  background: rgba(52, 211, 153, 0.13);
+  border: 1px solid rgba(52, 211, 153, 0.33);
+  color: var(--gsap);
+}
+
+/* ─── Code block ─────────────────────────────────────────────────────── */
+.code {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-family: "Fira Code", monospace;
+  font-size: 12px;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.codeFm {
+  border: 1px solid rgba(167, 139, 250, 0.19);
+}
+
+.codeGsap {
+  border: 1px solid rgba(52, 211, 153, 0.19);
+}
+
+/* ─── Demo box ───────────────────────────────────────────────────────── */
+.demoBox {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.demoBoxFm {
+  background: rgba(167, 139, 250, 0.4);
+  border: 2px solid var(--fm);
+}
+
+.demoBoxGsap {
+  background: rgba(52, 211, 153, 0.4);
+  border: 2px solid var(--gsap);
+}
+
+.demoBoxLabel {
+  font-family: monospace;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.demoBoxLabelFm {
+  color: var(--fm);
+}
+
+.demoBoxLabelGsap {
+  color: var(--gsap);
+}
+
+/* ─── Replay button ──────────────────────────────────────────────────── */
+.replayBtn {
+  border-radius: 8px;
+  padding: 4px 14px;
+  font-family: monospace;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.replayBtnFm {
+  background: rgba(167, 139, 250, 0.13);
+  border: 1px solid rgba(167, 139, 250, 0.31);
+  color: var(--fm);
+}
+
+.replayBtnGsap {
+  background: rgba(52, 211, 153, 0.13);
+  border: 1px solid rgba(52, 211, 153, 0.31);
+  color: var(--gsap);
+}
+
+/* ─── Color utilities ────────────────────────────────────────────────── */
+.textFm     { color: var(--fm); }
+.textGsap   { color: var(--gsap); }
+.textRed    { color: var(--red); }
+.textOrange { color: var(--orange); }
+
+/* ─── Stagger grid ───────────────────────────────────────────────────── */
+.staggerWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.staggerGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.staggerDot {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+}
+
+.staggerNote {
+  font-family: monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.35);
   text-align: center;
+}
+
+/* ─── Entrance wrap ──────────────────────────────────────────────────── */
+.entranceWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ─── Sequence scene ─────────────────────────────────────────────────── */
+.seqScene {
+  position: relative;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 20px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  overflow: hidden;
+  min-height: 160px;
+}
+
+.seqOrb {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  opacity: 0.9;
+}
+
+.seqLabel {
+  font-family: Inter, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  text-align: center;
+}
+
+.seqSub {
+  font-family: monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 4px 0 0;
+  text-align: center;
+}
+
+.seqArcWrap {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.seqStatus {
+  padding: 8px 14px;
+  border-radius: 10px;
+}
+
+.seqStatusFm {
+  background: var(--fm-bg12);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+}
+
+.seqStatusGsap {
+  background: var(--gsap-bg12);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+}
+
+.seqStatusText {
+  font-family: monospace;
+  font-size: 10px;
+  margin: 0;
+}
+
+.seqStatusSub {
   font-family: monospace;
   font-size: 9px;
-  pointer-events: none;
+  color: rgba(255, 255, 255, 0.3);
+  margin: 2px 0 0;
+}
+
+/* ─── Scroll layout helpers ──────────────────────────────────────────── */
+.scrollInner {
+  height: 300%;
+  padding-top: 12px;
+}
+
+.scrollSticky {
+  position: sticky;
+  top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pathScrollInner {
+  height: 200%;
+}
+
+.pathStickyScene {
+  position: sticky;
+  top: 0;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ─── Parallax scene ─────────────────────────────────────────────────── */
+.pxScene {
+  position: sticky;
+  top: 0;
+  height: 420px;
+  background: #0a0a18;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.pxLayer {
+  position: absolute;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.pxLayerLabel {
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.pxLayerSpeed {
+  font-family: monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ─── Section 6 parallax column wrappers ─────────────────────────────── */
+.pxColFm {
+  background: var(--fm-bg);
+  border: 1px solid rgba(167, 139, 250, 0.19);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.pxColGsap {
+  background: var(--gsap-bg);
+  border: 1px solid rgba(52, 211, 153, 0.19);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.pxColHeader {
+  padding: 16px 20px 0;
+}
+
+.pxColCode {
+  padding: 20px;
+  padding-top: 0;
+}
+
+/* ─── Desync (heavy parallax) ────────────────────────────────────────── */
+.desyncScene {
+  position: sticky;
+  top: 0;
+  height: 420px;
+  background: #080812;
+  overflow: hidden;
+}
+
+.desyncRefLine {
+  position: absolute;
+  top: 0;
+  bottom: 40px;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.15);
   z-index: 20;
+}
+
+.desyncRefLabel {
+  position: absolute;
+  top: 8px;
+  font-family: monospace;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.3);
+  z-index: 20;
+}
+
+.desyncBar {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  height: 34px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+}
+
+.desyncBarLabel {
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: #000;
+}
+
+.desyncNote {
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: monospace;
+  font-size: 10px;
+  pointer-events: none;
+}
+
+/* ─── Full-width 2-col layout (heavy parallax section) ──────────────── */
+.splitSection {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.splitInner {
+  padding: 60px 24px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.splitGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.splitCol {
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.splitColLast {
+  /* no right border */
+}
+
+.splitColHeader {
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.splitColNote {
+  font-family: monospace;
+  font-size: 10px;
+}
+
+.splitColCode {
+  padding: 20px;
 }
 
 /* ─── Section 7: Card stacking ──────────────────────────────────────── */
 .stackCard {
   border-radius: 14px;
-  /* height is set inline so it can be overridden per-card */
   padding: 0 20px;
   display: flex;
   align-items: center;
   gap: 14px;
   backdrop-filter: blur(12px);
-  /* layered shadow makes front/back depth visible */
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6), 0 1px 0 rgba(255, 255, 255, 0.06) inset;
   border: 1px solid transparent;
 }
@@ -87,4 +544,298 @@
   font-size: 10px;
   color: rgba(255, 255, 255, 0.4);
   margin: 2px 0 0;
+}
+
+.stackCardNum {
+  font-family: monospace;
+  font-size: 9px;
+  opacity: 0.6;
+}
+
+.stackCardFlex {
+  flex: 1;
+}
+
+.stackInner {
+  padding: 0 4px;
+}
+
+/* ─── Scroll smoothing track ─────────────────────────────────────────── */
+.smoothWrap {
+  position: sticky;
+  top: 0;
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.smoothInfo {
+  padding: 8px 14px;
+  border-radius: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.smoothInfoFm {
+  background: var(--fm-bg12);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+}
+
+.smoothInfoGsap {
+  background: var(--gsap-bg12);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+}
+
+.smoothInfoTitle {
+  font-family: monospace;
+  font-size: 10px;
+  margin: 0 0 2px;
+}
+
+.smoothInfoSub {
+  font-family: monospace;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.3);
+  margin: 0;
+}
+
+.smoothTracksRow {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.smoothTrackWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.smoothTrackBox {
+  position: relative;
+  width: 80px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.smoothTrackGroove {
+  position: absolute;
+  left: 50%;
+  top: 18px;
+  bottom: 18px;
+  width: 2px;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1px;
+}
+
+.smoothTrackHairline {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 1px;
+}
+
+.smoothTrackTgt {
+  position: absolute;
+  right: 4px;
+  font-family: monospace;
+  font-size: 7px;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1;
+}
+
+.smoothTrackBall {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.smoothTrackLag {
+  position: absolute;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  opacity: 0.6;
+}
+
+.smoothTrackLagRed    { background: var(--red); }
+.smoothTrackLagOrange { background: var(--orange); }
+
+.smoothTrackNote {
+  font-family: monospace;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.35);
+  margin: 0;
+  text-align: center;
+  line-height: 1.5;
+  white-space: pre;
+}
+
+.smoothLagText {
+  font-family: monospace;
+  font-size: 9px;
+  margin: 0;
+}
+
+.smoothHint {
+  font-family: monospace;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.3);
+  margin: 0;
+}
+
+/* ─── SVG path overlay label ─────────────────────────────────────────── */
+.pathOverlayLabel {
+  position: absolute;
+  bottom: 8px;
+  font-family: monospace;
+  font-size: 9px;
+  margin: 0;
+}
+
+.pathOverlayLabelFm   { color: var(--fm); }
+.pathOverlayLabelGsap { color: var(--gsap); }
+
+/* ─── Scale warning ──────────────────────────────────────────────────── */
+.warningWrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px 40px;
+}
+
+.warningBox {
+  background: rgba(251, 191, 36, 0.08);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 14px;
+  padding: 20px 24px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.warningIcon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.warningTitle {
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(251, 191, 36, 0.9);
+  margin: 0 0 6px;
+}
+
+.warningBody {
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0;
+  line-height: 1.65;
+}
+
+.warningCodeYellow {
+  color: #fbbf24;
+  font-family: monospace;
+}
+
+.warningCodeGsap {
+  color: var(--gsap);
+  font-family: monospace;
+}
+
+.warningStrong {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ─── Summary ────────────────────────────────────────────────────────── */
+.summary {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 24px 100px;
+}
+
+.summaryTitle {
+  font-family: Inter, sans-serif;
+  font-size: clamp(22px, 3vw, 36px);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.summaryCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.summaryCardTitle {
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 12px;
+}
+
+.summaryCardFm {
+  font-family: monospace;
+  font-size: 12px;
+  margin-bottom: 4px;
+  color: var(--fm);
+}
+
+.summaryCardGsap {
+  font-family: monospace;
+  font-size: 12px;
+  margin-bottom: 10px;
+  color: var(--gsap);
+}
+
+.summaryCardWinner {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  padding: 2px 10px;
+  font-family: monospace;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ─── ScrollBox ──────────────────────────────────────────────────────── */
+.scrollBox {
+  overflow-y: scroll;
+  position: relative;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.25);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+/* ─── HoverGSAP cursor ───────────────────────────────────────────────── */
+.cursorPointer {
+  cursor: pointer;
+}
+
+/* ─── Simple Parallax / ScrollParallax height ────────────────────────── */
+.parallaxInner1200 {
+  height: 1200px;
 }
